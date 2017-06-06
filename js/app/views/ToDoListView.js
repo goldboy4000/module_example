@@ -71,7 +71,7 @@ define(['radio', 'underscore', 'text!templates/toDoListTemplate.html'],function(
         },
 
         show: function () {
-            this.el.innerHTML = this.tmpl({inputClass: this.inputTaskName, tasks: this.model.getTasks()});
+            this.el.innerHTML = this.tmpl({inputClass: this.inputTaskName, tasks: this.model.getTasks(), completedCount: this.model.getCompletedCount(), uncompletedCount: this.model.getUncompletedCount()});
         },
 
         clearTaskTextBox: function () {

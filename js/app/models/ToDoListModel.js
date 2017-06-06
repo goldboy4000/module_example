@@ -40,6 +40,23 @@ define(['radio', 'controllers/TaskController'], function(radio, TaskController)
                 }
             }.bind(this));
             radio.trigger('task/deleted');
+        },
+
+        getCompletedCount: function()
+        {
+            var counter = 0;
+            this.tasks.map(function (task, index) {
+                if (task.model.getStatus()) {
+                     counter++;
+                }
+            }.bind(this));
+
+            return counter;
+        },
+
+        getUncompletedCount: function()
+        {
+            return this.tasks.length - this.getCompletedCount();
         }
     };
 
