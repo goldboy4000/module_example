@@ -9,13 +9,13 @@ define(['underscore', 'text!templates/taskTemplate.html'], function(_, htmlStr)
 
         render: function (index) {
 
-            console.log(this.tmpl({index: index, name: this.model.getName(), status: this.model.getStatus()}));
+            // console.log(this.tmpl({index: index, name: this.model.getName(), status: this.model.getStatus()}));
 
-            var wrapper = document.createElement('div');
+            // var wrapper = document.createElement('div');
 
-            wrapper.innerHTML = this.tmpl({index: index, name: this.model.getName(), status: this.model.getStatus()});
+            // wrapper.innerHTML = this.tmpl({index: index, name: this.model.getName(), status: this.model.getStatus()});
 
-            return wrapper;
+            return this.tmpl({index: index, name: this.model.getName(), status: this.model.getStatus()});
         }
     };
 

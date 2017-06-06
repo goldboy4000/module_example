@@ -20,7 +20,7 @@ define(['models/TaskModel', 'views/TaskView'], function(TaskModel, TaskView)
             this.model.setSelected(false);
         },
 
-        getTaskElement: function (index) {
+        getRenderedTemplate: function (index) {
             return this.view.render(index);
         }
     };

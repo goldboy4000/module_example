@@ -1,7 +1,13 @@
-define(['radio'],function(radio)
+define(['radio', 'underscore', 'text!templates/toDoListTemplate.html'],function(radio, _, htmlStr)
 {
     var ToDoListView = function (model) {
         this.model = model;
+        this.el = document.querySelector('.js-container');
+
+        this.tmpl = _.template(htmlStr);
+
+        this.inputTaskName = 'task-text-box';
+        this.inputTaskSelector = '.' + this.inputTaskName;
 
         this.init();
     };
@@ -9,17 +15,9 @@ define(['radio'],function(radio)
     ToDoListView.prototype = {
 
         init: function () {
-            this.createChildren()
-                .setupHandlers()
-                .enable();
-        },
-
-        createChildren: function () {
-            this.el = document.querySelector('.js-container');
-            this.taskTextBoxEl = this.el.querySelector('.task-text-box');
-            this.tasksContainerEl = this.el.querySelector('.tasks-container');
-
-            return this;
+            this.setupHandlers()
+                .enable()
+                .show();
         },
 
         setupHandlers: function () {
@@ -29,6 +27,7 @@ define(['radio'],function(radio)
         },
 
         enable: function () {
+
             this.el.addEventListener('click', this.clickHandler);
 
             return this;
@@ -52,8 +51,8 @@ define(['radio'],function(radio)
         },
 
         addTaskButton: function () {
-            if (this.taskTextBoxEl.value) {
-                radio.trigger('task/add', this.taskTextBoxEl.value);
+            if (this.el.querySelector(this.inputTaskSelector).value) {
+                radio.trigger('task/add', this.el.querySelector(this.inputTaskSelector).value);
             }
         },
 
@@ -72,18 +71,11 @@ define(['radio'],function(radio)
         },
 
         show: function () {
-            this.buildList();
-        },
-
-        buildList: function () {
-            this.tasksContainerEl.innerHTML = '';
-            this.model.getTasks().map(function (task, index) {
-                this.tasksContainerEl.appendChild(task.getTaskElement(index));
-            }.bind(this));
+            this.el.innerHTML = this.tmpl({inputClass: this.inputTaskName, tasks: this.model.getTasks()});
         },
 
         clearTaskTextBox: function () {
-            this.taskTextBoxEl.value = '';
+            this.el.querySelector(this.inputTaskSelector).value = '';
         }
     };
 
