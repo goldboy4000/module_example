@@ -1,32 +1,19 @@
-define(function()
+define(['underscore', 'text!templates/taskTemplate.html'], function(_, htmlStr)
 {
     var TaskView = function (model) {
         this.model = model;
+        this.tmpl = _.template(htmlStr);
     };
 
     TaskView.prototype = {
 
         render: function (index) {
+
+            console.log(this.tmpl({index: index, name: this.model.getName(), status: this.model.getStatus()}));
+
             var wrapper = document.createElement('div');
-            wrapper.classList.add('field');
-            if (this.model.getStatus()) {
-                wrapper.classList.add('completed');
-            }
 
-            var label = document.createElement('label');
-            label.classList.add('checkbox');
-
-            var input = document.createElement('input');
-            input.classList.add('task');
-            input.setAttribute('type', 'checkbox');
-            input.setAttribute('data-index', index);
-            input.checked = this.model.getSelected();
-            label.appendChild(input);
-
-            var name = document.createTextNode(' ' + this.model.getName());
-            label.appendChild(name);
-
-            wrapper.appendChild(label);
+            wrapper.innerHTML = this.tmpl({index: index, name: this.model.getName(), status: this.model.getStatus()});
 
             return wrapper;
         }
